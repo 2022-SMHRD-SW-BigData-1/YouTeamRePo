@@ -12,6 +12,8 @@ public class Ex01 {
 		
 		System.out.println("팀 노강민 커밋!");
 		
+		System.out.println("팀 박수민 커밋");
+		
 	}
 
 }
