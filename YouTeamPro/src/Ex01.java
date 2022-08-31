@@ -6,7 +6,7 @@ public class Ex01 {
 
 		System.out.println("팀 첫번째 커밋;;;");
 		
-		
+		System.out.println("팀 서은유 커밋");
 		
 	}
 
