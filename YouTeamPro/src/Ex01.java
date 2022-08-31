@@ -8,6 +8,8 @@ public class Ex01 {
 		
 		System.out.println("팀 서은유 커밋");
 		
+		System.out.println("팀 김기철 커밋!");
+		
 	}
 
 }
