@@ -51,38 +51,3 @@ public class MemberVO {
 
 
 }
-else if (num1 == 2) {
-	String sql = "select * from(" + " select * from word" + " order by DBMS_RANDOM.RANDOM"
-			+ ") where rownum < 2";
-	psmt = conn.prepareStatement(sql);
-	psmt.setString(1, word);
-	cnt = psmt.executeQuery();
-
-	if (cnt.next()) {
-		a = cnt.getString("word");
-		words = new MemberVO(a);
-		a = words.getwords();
-	} else {
-		words = null;
-	}
-} else if (num1 == 3) {
-	String sql = "select * from(" + " select * from word" + " order by DBMS_RANDOM.RANDOM"
-			+ ") where rownum < 2";
-	psmt = conn.prepareStatement(sql);
-	psmt.setString(1, word);
-	cnt = psmt.executeQuery();
-
-	if (cnt.next()) {
-		a = cnt.getString("word");
-		words = new MemberVO(a);
-		a = words.getwords();
-	} else {
-		words = null;
-	}
-}
-} catch (SQLException e) {
-e.printStackTrace();
-} finally {
-close();
-}
-return a;
