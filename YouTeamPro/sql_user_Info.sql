@@ -2,15 +2,18 @@
 create table user_Info
 (
 id varchar2(10),
-pw number(10) not null,
+pw varchar2(10) not null,
 nick varchar2(10) not null,
-score number(5) not null,
-grade varchar2(5) not null,
-time varchar2(10) not null,
+score number(5) ,
+grade varchar2(5) ,
+time varchar2(10) ,
 constraint user_Info_id_pk primary key(id),
 constraint user_Info_nick_uk unique(nick),
 constraint user_Info_grade_ck check(grade in('1티어','2티어','3티어'))
 );
+
+select * from user_info;
+insert into user_Info(id, pw, nick) values ('ㅇ','ㅇ','ㅇ');
 
 create table game
 (
@@ -162,4 +165,4 @@ select * from(
 select * from game where type = 'animal'
 order by DBMS_RANDOM.RANDOM
 ) where rownum < 2
-
+drop table user_info cascade constraints

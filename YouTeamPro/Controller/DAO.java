@@ -50,7 +50,7 @@ public class DAO {
 		int cnt = 0;
 		try {
 			getCon();
-			String sql = "insert into user_Info values (?,?,?)";
+			String sql = "insert into user_Info(id, pw, nick) values (?,?,?)";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
 			psmt.setString(2, pw);
