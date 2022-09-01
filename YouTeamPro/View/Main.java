@@ -3,6 +3,7 @@ package View;
 import java.util.Scanner;
 
 import Controller.DAO;
+import Controller.hangman;
 
 public class Main {
 
@@ -10,6 +11,8 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		DAO dao = new DAO();
 		dao.getCon();
+
+
 		
 		
 		
