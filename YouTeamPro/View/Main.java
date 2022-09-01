@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 import Controller.DAO;
+import Controller.hangman;
 
 public class Main {
 
@@ -14,6 +15,7 @@ public class Main {
 		Scanner sc = new Scanner(System.in);
 		DAO dao = new DAO();
 		dao.getCon();
+
 
 		while (true) {
 			System.out.println("[1]회원가입 [2]로그인 [3]전체랭킹확인 [4]회원탈퇴 [5]게임종료");

@@ -154,8 +154,12 @@ insert into game
 values('Jin Yeong', 'name', 'hard');
 insert into game
 values('Se yeon', 'name', 'hard');
+commit;
 
 
 select * from game;
-
+select * from(
+select * from game where type = 'animal'
+order by DBMS_RANDOM.RANDOM
+) where rownum < 2
 
