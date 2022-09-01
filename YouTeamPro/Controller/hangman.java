@@ -6,7 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Random;
-import Model1.MemberVO1;
+
+import Model.MemberVO;
 
 public class hangman {
 
@@ -56,7 +57,7 @@ public class hangman {
 		int num1 = 0;
 		int num2 = 0;
 		ResultSet cnt = null;
-		MemberVO1 words = null;
+		MemberVO words = null;
 
 		try {
 			getCon();
@@ -68,7 +69,7 @@ public class hangman {
 				cnt = psmt.executeQuery();
 				if (cnt.next()) {
 					a = cnt.getString("word");
-					words = new MemberVO1(a);
+					words = new MemberVO(a);
 					a = words.getwords();
 				} else {
 					words = null;
@@ -80,7 +81,7 @@ public class hangman {
 				cnt = psmt.executeQuery();
 				if (cnt.next()) {
 					a = cnt.getString("word");
-					words = new MemberVO1(a);
+					words = new MemberVO(a);
 					a = words.getwords();
 				} else {
 					words = null;
@@ -93,7 +94,7 @@ public class hangman {
 				cnt = psmt.executeQuery();
 				if (cnt.next()) {
 					a = cnt.getString("word");
-					words = new MemberVO1(a);
+					words = new MemberVO(a);
 					a = words.getwords();
 				} else {
 					words = null;
@@ -105,7 +106,7 @@ public class hangman {
 				cnt = psmt.executeQuery();
 				if (cnt.next()) {
 					a = cnt.getString("word");
-					words = new MemberVO1(a);
+					words = new MemberVO(a);
 					a = words.getwords();
 				} else {
 					words = null;
@@ -118,7 +119,7 @@ public class hangman {
 				cnt = psmt.executeQuery();
 				if (cnt.next()) {
 					a = cnt.getString("word");
-					words = new MemberVO1(a);
+					words = new MemberVO(a);
 					a = words.getwords();
 				} else {
 					words = null;

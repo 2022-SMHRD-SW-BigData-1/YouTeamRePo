@@ -18,6 +18,14 @@ public class MemberVO {
 		this.time = time;
 	}
 
+	public MemberVO(String a) {
+		
+	}
+	
+	public String getwords() {
+		return null;
+	}
+
 	public String getId() {
 		return id;
 	}
