@@ -126,7 +126,7 @@ public class hangman {
 			}
 			char[] q = new char[a.length()];
 			char[] p = new char[a.length()];
-			
+
 			for (int i = 0; i < q.length; i++) {
 				q[i] = a.charAt(i);
 				p[i] = '_';
