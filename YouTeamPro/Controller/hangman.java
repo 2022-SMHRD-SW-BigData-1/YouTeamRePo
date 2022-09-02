@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -15,34 +16,69 @@ public class hangman {
 
 	Scanner sc = new Scanner(System.in);
 	Random rd = new Random();
-	Connection conn = null;
-	PreparedStatement psmt = null;
-	ResultSet rs = null;
+	Connection conn;
+	PreparedStatement psmt;
+	ResultSet rs;
 	String answerWord = null;
 	DAO dao = new DAO();
+	public void getCon() {
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			String url = "jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
+			String db_id = "campus_h_0830_2";
+			String db_pw = "smhrd2";
+
+			conn = DriverManager.getConnection(url, db_id, db_pw);
+
+//			if (conn != null) {
+//				System.out.println("접속 성공");
+//			} else {
+//				System.out.println("접속 실패");
+//			}
+		} catch (Exception e) {
+			System.out.println("오류");
+			e.printStackTrace();
+		}
+	}
 
 	public void getword() {
+		getCon();
 		int life = 3;
 		while (true) {
 			int score = 0;
 			int scorePlus = 0;
 			int num1 = 1;
 			int num2 = 1;
-			ResultSet cnt = null;
-			MemberVO words = null;
+			ResultSet cnt;
+			MemberVO words;
+			System.out.print("난이도 선택 : \n[1]EASY [2]NORMAL [3]HARD    ");
+			num1 = sc.nextInt();
+			switch(num1) {
+			case 1:
+				System.out.print("카테고리선택 : \n[1]동물 [2]나라    ");
+				num2 = sc.nextInt();
+				break;
+			case 2:
+				System.out.print("카테고리선택 : \n[1]음식 [2]브랜드명    ");
+				num2 = sc.nextInt();
+				break;
+			}
 
 			try {
-				dao.getCon();
+				System.out.println(conn);
 
 				if (num1 == 1 && num2 == 1) {
-					String sql = "select * from(" + " select * from game where type = 'animal'"
-							+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
+					String sql = "select * from( select * from game where type = 'animal' order by DBMS_RANDOM.RANDOM) where rownum < 2";
+					System.out.println(conn);
 					psmt = conn.prepareStatement(sql);
-					cnt = psmt.executeQuery();
-					if (cnt.next()) {
-						answerWord = cnt.getString("word");
+					System.out.println(conn);
+					rs = psmt.executeQuery();
+					if (rs.next()) {
+						answerWord = rs.getString("word");
+						System.out.println(answerWord);
 						words = new MemberVO(answerWord);
-						answerWord = words.getwords();
+//						answerWord = words.getwords();
+						System.out.println(answerWord);
 						scorePlus = 200;
 					} else {
 						words = null;
@@ -95,6 +131,7 @@ public class hangman {
 					cnt = psmt.executeQuery();
 					if (cnt.next()) {
 						answerWord = cnt.getString("word");
+						
 						words = new MemberVO(answerWord);
 						answerWord = words.getwords();
 						scorePlus = 300;
@@ -109,10 +146,13 @@ public class hangman {
 					problem[i] = answerWord.charAt(i);
 					answer[i] = '_';
 				}
-				Arrays.toString(answer);
 				int chance = 6;
 				while (true) {
+					
+					System.out.println( Arrays.toString(answer));
+					System.out.println( Arrays.toString(problem));
 					boolean check = false;
+					boolean checkreal = false;
 					System.out.print("영어단어를 입력하세요. : ");
 					char input = sc.next().charAt(0);
 					for (int i = 0; i < answer.length; i++) {
@@ -121,15 +161,23 @@ public class hangman {
 							check = true;
 						}
 					}
+					for (int i = 0; i < answer.length; i++) {
+						if(answer[i] != problem[i]) {
+							break;
+						}
+						checkreal = true;
+					}
 					if (check == false) {
 						chance--;
 					}
-					if (answer == problem) {
+					if (checkreal == true) {
+						System.out.println("성공");
 						score = score + scorePlus;
 						break;
 					}
 					if (chance == 0) {
 						life--;
+						System.out.println("실패");
 						break;
 					}
 				}

@@ -167,3 +167,5 @@ select * from game where type = 'animal'
 order by DBMS_RANDOM.RANDOM
 ) where rownum < 2
 drop table user_info cascade constraints
+
+select * from game;
