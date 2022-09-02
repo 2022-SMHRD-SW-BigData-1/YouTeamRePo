@@ -21,8 +21,7 @@ public class Main {
 		hangman play = new hangman();
 		int menu = 0;
 		String id = null;
-		String time = null;
-		int score = 0;
+		int[] rt = new int[2];
 
 		while (true) {
 			System.out.print("[1]회원가입 [2]로그인 [3]전체랭킹확인 [4]회원탈퇴 [5]게임종료>> ");
@@ -66,7 +65,7 @@ public class Main {
 					System.out.print(list.get(i).getNick() + "\t");
 					System.out.print(list.get(i).getScore() + "\t");
 					System.out.print(list.get(i).getGrade() + "\t");
-					System.out.println(list.get(i).getTime() + "\t");
+					System.out.println(list.get(i).getTimes() + "\t");
 				}
 			} else if (menu == 4) {
 				System.out.print("아이디 >> ");
@@ -86,10 +85,12 @@ public class Main {
 
 		}
 		if (menu == 2) {
-			play.getword();
+			rt = play.getword();
 		}
+		int score = rt[0];
+		int time = rt[1];
+		System.out.println(score);
 		dao.lastScoreTime(id, time, score);
-		System.out.println("아이디 : " + id + "\t점수 : " + score + "\t 시간 : " + time);
 
 	}
 }

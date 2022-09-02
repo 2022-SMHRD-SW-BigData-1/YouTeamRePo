@@ -100,51 +100,36 @@ public class DAO {
 		}
 		return false;
 	}
+
 	// 3.전체 랭킹확인 -> 수민팀장님
-	public ArrayList<MemberVO> select(){
+	public ArrayList<MemberVO> select() {
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
-	try {
-		getCon();
-		String sql ="select * from user_info";
-		psmt =conn.prepareStatement(sql);	
-		rs = psmt.executeQuery();
-		
-		while(rs.next()) {
-			String id = rs.getString(1);
-			String nick = rs.getString(2);
-//			int score =rs.getInt(3);
-//			String grade = rs.getString(4);
-//			String time = rs.getString(5);
-			
-			MemberVO vo =new MemberVO(id, nick);
-			list.add(vo);
+		try {
+			getCon();
+			String sql = "select * from user_info";
+			psmt = conn.prepareStatement(sql);
+			rs = psmt.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("id");
+				String nick = rs.getString("nick");
+				int score = rs.getInt("score");
+				String grade = rs.getString("grade");
+				int times = rs.getInt("times");
+
+				MemberVO vo = new MemberVO(id, nick, score, grade, times);
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			System.out.println("오류");
+			e.printStackTrace();
+
+		} finally {
+			close();
 		}
-	}catch (SQLException e) {
-		System.out.println("오류");
-		e.printStackTrace();
-		
-	}finally {
-		close();
+		return list;
+
 	}
-	return list;
-		
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
 
 	// 4.탈퇴
 	public int delete(String id) {
@@ -163,17 +148,18 @@ public class DAO {
 		}
 		return cnt;
 	}
-	public int lastScoreTime(String id, String time, int score) {
+
+	public int lastScoreTime(String id, int time, int score) {
 		int cnt = 0;
 		try {
 			getCon();
-			String sql = "update student set socre = ? and set time = ? where id = ?";
+			String sql = "update user_Info set score = ? ,times = ? where id = ?";
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(3, id);
 			psmt.setInt(1, score);
-			psmt.setString(2, time);
-			System.out.println(conn);
+			psmt.setInt(2, time);
+			psmt.setString(3, id);
 			cnt = psmt.executeUpdate();
+			System.out.println("아이디 : " + id + "\t점수 : " + score + "\t 시간 : " + time);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

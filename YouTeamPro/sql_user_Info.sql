@@ -6,7 +6,7 @@ pw varchar2(10) not null,
 nick varchar2(10) not null,
 score number(5) ,
 grade varchar2(5) ,
-time varchar2(10) ,
+times number(10) ,
 constraint user_Info_id_pk primary key(id),
 constraint user_Info_nick_uk unique(nick),
 constraint user_Info_grade_ck check(grade in('1티어','2티어','3티어'))
@@ -161,7 +161,7 @@ commit;
 
 commit;
 
-select * from game;
+select * from game where type = 'brand';
 select * from(
 select * from game where type = 'animal'
 order by DBMS_RANDOM.RANDOM
@@ -169,3 +169,4 @@ order by DBMS_RANDOM.RANDOM
 drop table user_info cascade constraints
 drop table game cascade constraints
 select * from game;
+update user_Info set score = 200 ,times = 100 where id = 1;

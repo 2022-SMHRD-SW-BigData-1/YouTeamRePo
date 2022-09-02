@@ -41,11 +41,13 @@ public class hangman {
 		}
 	}
 
-	public void getword() {
+	public int[] getword() {
 		getCon();
 		int life = 3;
+		int[] rt = new int[2];
 		int score = 0;
 		int scorePlus = 0;
+		int resultTime = 0;
 		while (true) {
 			int num1 = 1;
 			int num2 = 1;
@@ -107,7 +109,7 @@ public class hangman {
 					} else {
 						words = null;
 					}
-				} else if (num2 == 1 && num2 == 2) {
+				} else if (num2 == 2 && num2 == 2) {
 					String sql = "select * from(" + " select * from game where type = 'brand'"
 							+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
 					psmt = conn.prepareStatement(sql);
@@ -192,9 +194,12 @@ public class hangman {
 			}
 			if (life == 0) {
 				System.out.println("게임 종료");
-				break;
+				dao.close();
+				System.out.println(score);
+				rt[0] = score;
+				rt[1] = resultTime;
+				return rt;
 			}
-			dao.close();
 		}
 
 	}
