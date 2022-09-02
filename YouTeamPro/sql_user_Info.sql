@@ -13,7 +13,7 @@ constraint user_Info_grade_ck check(grade in('1티어','2티어','3티어'))
 );
 
 select * from user_info;
-insert into user_Info(id, pw, nick) values ('ㅇ','ㅇ','ㅇ');
+insert into user_Info(id, pw, nick) values ('ddd','dddd','ddd');
 
 create table game
 (
@@ -159,6 +159,7 @@ insert into game
 values('Se yeon', 'name', 'hard');
 commit;
 
+commit;
 
 select * from game;
 select * from(

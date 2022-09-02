@@ -3,6 +3,7 @@ package View;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -14,9 +15,11 @@ public class Main {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		DAO dao = new DAO();
-		dao.getCon();
-
-
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		
 		while (true) {
 			System.out.println("[1]회원가입 [2]로그인 [3]전체랭킹확인 [4]회원탈퇴 [5]게임종료");
 			int menu = sc.nextInt();
@@ -28,7 +31,10 @@ public class Main {
 				String pw = sc.next();
 				System.out.print("nick : ");
 				String nick = sc.next();
-
+				dao.getCon();
+				
+				
+				
 				int cnt = dao.join(id, pw, nick);
 				if (cnt > 0) {
 					System.out.println("등록 성공");

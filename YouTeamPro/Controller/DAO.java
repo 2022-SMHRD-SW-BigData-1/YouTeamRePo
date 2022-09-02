@@ -10,6 +10,7 @@ public class DAO {
 	Connection conn = null;
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
+
 	public void getCon() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -29,6 +30,7 @@ public class DAO {
 			e.printStackTrace();
 		}
 	}
+
 	private void close() {
 		try {
 			if (rs != null)
@@ -38,25 +40,27 @@ public class DAO {
 			if (conn != null)
 				conn.close();
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 			System.out.println("자원반납 시 오류");
 		}
 
 	}
-	
-	// 회원가입 
+
+	// 회원가입
 	public int join(String id, String pw, String nick) {
 		int cnt = 0;
 		try {
 			getCon();
-			String sql = "insert into user_Info(id, pw, nick) values (?,?,?)";
+			String sql = "insert into user_info(id, pw, nick) values (?,?,?)";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
 			psmt.setString(2, pw);
 			psmt.setString(3, nick);
+			System.out.println(conn);
 
 			cnt = psmt.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -64,17 +68,17 @@ public class DAO {
 		}
 		return cnt;
 	}
-	
+
 	// 로그인
 	public boolean login(String id, String pw) {
 
 		try {
 			getCon();
-			
+
 			String sql = "select pw from user_Info where id = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setString(1, id);
-			
+
 			rs = psmt.executeQuery();
 
 			if (rs.next()) {
@@ -84,7 +88,7 @@ public class DAO {
 				}
 
 			}
-			return false; // 비밀번호 불일치 
+			return false; // 비밀번호 불일치
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -93,9 +97,9 @@ public class DAO {
 		}
 		return false;
 	}
-	// 3.전체 랭킹확인 -> 수민팀장님 
-	
-	// 4.탈퇴 
+	// 3.전체 랭킹확인 -> 수민팀장님
+
+	// 4.탈퇴
 	public int delete(String id) {
 		int cnt = 0;
 		try {
@@ -113,12 +117,4 @@ public class DAO {
 		return cnt;
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
 }
