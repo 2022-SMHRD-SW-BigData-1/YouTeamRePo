@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import Model.MemberVO;
 
 public class DAO {
 	Connection conn = null;
@@ -20,11 +23,11 @@ public class DAO {
 
 			conn = DriverManager.getConnection(url, db_id, db_pw);
 
-			if (conn != null) {
-				System.out.println("접속 성공");
-			} else {
-				System.out.println("접속 실패");
-			}
+//			if (conn != null) {
+//				System.out.println("접속 성공");
+//			} else {
+//				System.out.println("접속 실패");
+//			}
 		} catch (Exception e) {
 			System.out.println("오류");
 			e.printStackTrace();
@@ -98,6 +101,50 @@ public class DAO {
 		return false;
 	}
 	// 3.전체 랭킹확인 -> 수민팀장님
+	public ArrayList<MemberVO> select(){
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+	try {
+		getCon();
+		String sql ="select * from user_info";
+		psmt =conn.prepareStatement(sql);	
+		rs = psmt.executeQuery();
+		
+		while(rs.next()) {
+			String id = rs.getString(1);
+			String nick = rs.getString(2);
+//			int score =rs.getInt(3);
+//			String grade = rs.getString(4);
+//			String time = rs.getString(5);
+			
+			MemberVO vo =new MemberVO(id, nick);
+			list.add(vo);
+		}
+	}catch (SQLException e) {
+		System.out.println("오류");
+		e.printStackTrace();
+		
+	}finally {
+		close();
+	}
+	return list;
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 	// 4.탈퇴
 	public int delete(String id) {

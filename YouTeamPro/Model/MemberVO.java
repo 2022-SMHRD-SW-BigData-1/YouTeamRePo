@@ -17,6 +17,14 @@ public class MemberVO {
 		this.grade = grade;
 		this.time = time;
 	}
+	public MemberVO(String id, String nick) {
+		super();
+		this.id = id;
+		this.nick = nick;
+//		this.score = score;
+//		this.grade = grade;
+//		this.time = time;
+	}
 
 	public MemberVO(String a) {
 		
