@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-import Model1.MemberVO1;
+import Model.MemberVO;
 
 public class hangman {
 
@@ -65,7 +65,7 @@ public class hangman {
 			int num1 = 1;
 			int num2 = 1;
 			ResultSet cnt = null;
-			MemberVO1 words = null;
+			MemberVO words = null;
 
 			try {
 				getCon();
@@ -77,7 +77,7 @@ public class hangman {
 					cnt = psmt.executeQuery();
 					if (cnt.next()) {
 						answerWord = cnt.getString("word");
-						words = new MemberVO1(answerWord);
+						words = new MemberVO(answerWord);
 						answerWord = words.getwords();
 						scorePlus = 200;
 					} else {
@@ -90,7 +90,7 @@ public class hangman {
 					cnt = psmt.executeQuery();
 					if (cnt.next()) {
 						answerWord = cnt.getString("word");
-						words = new MemberVO1(answerWord);
+						words = new MemberVO(answerWord);
 						answerWord = words.getwords();
 						scorePlus = 200;
 					} else {
@@ -104,7 +104,7 @@ public class hangman {
 					cnt = psmt.executeQuery();
 					if (cnt.next()) {
 						answerWord = cnt.getString("word");
-						words = new MemberVO1(answerWord);
+						words = new MemberVO(answerWord);
 						answerWord = words.getwords();
 						scorePlus = 250;
 					} else {
@@ -117,7 +117,7 @@ public class hangman {
 					cnt = psmt.executeQuery();
 					if (cnt.next()) {
 						answerWord = cnt.getString("word");
-						words = new MemberVO1(answerWord);
+						words = new MemberVO(answerWord);
 						answerWord = words.getwords();
 						scorePlus = 250;
 					} else {
@@ -131,7 +131,7 @@ public class hangman {
 					cnt = psmt.executeQuery();
 					if (cnt.next()) {
 						answerWord = cnt.getString("word");
-						words = new MemberVO1(answerWord);
+						words = new MemberVO(answerWord);
 						answerWord = words.getwords();
 						scorePlus = 300;
 					} else {
