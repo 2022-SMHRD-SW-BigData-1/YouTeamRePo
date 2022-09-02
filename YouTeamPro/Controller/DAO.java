@@ -34,7 +34,7 @@ public class DAO {
 		}
 	}
 
-	private void close() {
+	public void close() {
 		try {
 			if (rs != null)
 				rs.close();

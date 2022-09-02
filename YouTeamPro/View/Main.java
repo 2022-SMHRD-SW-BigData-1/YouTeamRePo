@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import Controller.DAO;
+import Controller.hangman;
 import Model.MemberVO;
 
 public class Main {
@@ -17,6 +18,7 @@ public class Main {
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
+		hangman play = new hangman();
 		
 		
 		while (true) {
@@ -49,6 +51,7 @@ public class Main {
 				boolean res = dao.login(id, pw);
 				if (res == true) {
 					System.out.println("로그인 SUCCESS!");
+					break;
 				} else {
 					System.out.println("로그인 Fail..");
 				}
@@ -81,5 +84,6 @@ public class Main {
 			}
 
 		}
+		play.getword();
 	}
 }

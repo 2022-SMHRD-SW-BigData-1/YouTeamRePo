@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
@@ -20,42 +19,7 @@ public class hangman {
 	PreparedStatement psmt = null;
 	ResultSet rs = null;
 	String answerWord = null;
-
-	public void getCon() {
-
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-
-			String url = "jdbc:oracle:thin:@project-db-stu.ddns.net:1524:xe";
-			String db_id = "campus_h_0830_2";
-			String db_pw = "smhrd2";
-
-			conn = DriverManager.getConnection(url, db_id, db_pw);
-
-			if (conn != null) {
-				System.out.println("접속 성공");
-			} else {
-				System.out.println("접속 실패");
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void close() {
-		try {
-			if (rs != null)
-				rs.close();
-			if (psmt != null)
-				psmt.close();
-			if (conn != null)
-				conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("자원반납 시 오류");
-		}
-	}
+	DAO dao = new DAO();
 
 	public void getword() {
 		int life = 3;
@@ -68,7 +32,7 @@ public class hangman {
 			MemberVO words = null;
 
 			try {
-				getCon();
+				dao.getCon();
 
 				if (num1 == 1 && num2 == 1) {
 					String sql = "select * from(" + " select * from game where type = 'animal'"
@@ -172,7 +136,7 @@ public class hangman {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
-				close();
+				dao.close();
 			}
 			if (life == 0) {
 				System.out.println("게임 종료");
