@@ -6,16 +6,24 @@ public class MemberVO {
 	private String nick;
 	private int score;
 	private String grade;
-	private String time;
+	private int times;
 	
-	public MemberVO(String id, int pw, String nick, int score, String grade, String time) {
+	public MemberVO(String id, int pw, String nick, int score, String grade, int times) {
 		super();
 		this.id = id;
 		this.pw = pw;
 		this.nick = nick;
 		this.score = score;
 		this.grade = grade;
-		this.time = time;
+		this.times = times;
+	}
+	public MemberVO(String id,String nick, int score, String grade, int times) {
+		super();
+		this.id = id;
+		this.nick = nick;
+		this.score = score;
+		this.grade = grade;
+		this.times = times;
 	}
 	public MemberVO(String id, String nick) {
 		super();
@@ -74,12 +82,12 @@ public class MemberVO {
 		this.grade = grade;
 	}
 
-	public String getTime() {
-		return time;
+	public int getTimes() {
+		return times;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public void setTime(int times) {
+		this.times = times;
 	}
 	
 	
