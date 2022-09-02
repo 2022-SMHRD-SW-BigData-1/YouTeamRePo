@@ -108,27 +108,27 @@ insert into game
 values('avocado', 'food', 'normal');
 
 insert into game
-values('Da On', 'name', 'hard');
+values('DaOn', 'name', 'hard');
 insert into game
-values('Ki Cheol', 'name', 'hard');
+values('KiCheol', 'name', 'hard');
 insert into game
-values('Dae Ryun', 'name', 'hard');
+values('DaeRyun', 'name', 'hard');
 insert into game
-values('Dae Hyun', 'name', 'hard');
+values('DaeHyun', 'name', 'hard');
 insert into game
-values('Jun Yeong', 'name', 'hard');
+values('JunYeong', 'name', 'hard');
 insert into game
-values('Hyeon Jae', 'name', 'hard');
+values('HyeonJae', 'name', 'hard');
 insert into game
-values('Kang Min', 'name', 'hard');
+values('KangMin', 'name', 'hard');
 insert into game
-values('Kang Woo', 'name', 'hard');
+values('KangWoo', 'name', 'hard');
 insert into game
 values('yoohyeon', 'name', 'hard');
 insert into game
-values('Min Jin', 'name', 'hard');
+values('MinJin', 'name', 'hard');
 insert into game
-values('Su Min', 'name', 'hard');
+values('SuMin', 'name', 'hard');
 insert into game
 values('Chanho', 'name', 'hard');
 insert into game
@@ -136,27 +136,27 @@ values('EunYu', 'name', 'hard');
 insert into game
 values('Eunkyung', 'name', 'hard');
 insert into game
-values('Jeong Min', 'name', 'hard');
+values('JeongMin', 'name', 'hard');
 insert into game
-values('Jin Geun', 'name', 'hard');
+values('JinGeun', 'name', 'hard');
 insert into game
-values('Hyeon Jun', 'name', 'hard');
+values('HyeonJun', 'name', 'hard');
 insert into game
-values('Si On', 'name', 'hard');
+values('SiOn', 'name', 'hard');
 insert into game
-values('Tae Yun', 'name', 'hard');
+values('TaeYun', 'name', 'hard');
 insert into game
-values('Han Seong', 'name', 'hard');
+values('HanSeong', 'name', 'hard');
 insert into game
 values('Chanik', 'name', 'hard');
 insert into game
-values('A Ra', 'name', 'hard');
+values('ARa', 'name', 'hard');
 insert into game
-values('Ji Eun', 'name', 'hard');
+values('JiEun', 'name', 'hard');
 insert into game
-values('Jin Yeong', 'name', 'hard');
+values('JinYeong', 'name', 'hard');
 insert into game
-values('Se yeon', 'name', 'hard');
+values('Seyeon', 'name', 'hard');
 commit;
 
 commit;
@@ -167,5 +167,5 @@ select * from game where type = 'animal'
 order by DBMS_RANDOM.RANDOM
 ) where rownum < 2
 drop table user_info cascade constraints
-
+drop table game cascade constraints
 select * from game;

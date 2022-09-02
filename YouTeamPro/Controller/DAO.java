@@ -163,5 +163,23 @@ public class DAO {
 		}
 		return cnt;
 	}
+	public int lastScoreTime(String id, String time, int score) {
+		int cnt = 0;
+		try {
+			getCon();
+			String sql = "update student set socre = ? and set time = ? where id = ?";
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(3, id);
+			psmt.setInt(1, score);
+			psmt.setString(2, time);
+			System.out.println(conn);
+			cnt = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return cnt;
+	}
 
 }

@@ -44,12 +44,12 @@ public class hangman {
 	public void getword() {
 		getCon();
 		int life = 3;
+		int score = 0;
+		int scorePlus = 0;
 		while (true) {
-			int score = 0;
-			int scorePlus = 0;
 			int num1 = 1;
 			int num2 = 1;
-			ResultSet cnt;
+			ResultSet rs;
 			MemberVO words;
 			System.out.print("난이도 선택 : \n[1]EASY [2]NORMAL [3]HARD    ");
 			num1 = sc.nextInt();
@@ -65,13 +65,10 @@ public class hangman {
 			}
 
 			try {
-				System.out.println(conn);
 
 				if (num1 == 1 && num2 == 1) {
 					String sql = "select * from( select * from game where type = 'animal' order by DBMS_RANDOM.RANDOM) where rownum < 2";
-					System.out.println(conn);
 					psmt = conn.prepareStatement(sql);
-					System.out.println(conn);
 					rs = psmt.executeQuery();
 					if (rs.next()) {
 						answerWord = rs.getString("word");
@@ -87,11 +84,11 @@ public class hangman {
 					String sql = "select * from(" + " select * from game where type = 'country'"
 							+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
 					psmt = conn.prepareStatement(sql);
-					cnt = psmt.executeQuery();
-					if (cnt.next()) {
-						answerWord = cnt.getString("word");
+					rs = psmt.executeQuery();
+					if (rs.next()) {
+						answerWord = rs.getString("word");
 						words = new MemberVO(answerWord);
-						answerWord = words.getwords();
+//						answerWord = words.getwords();
 						scorePlus = 200;
 					} else {
 						words = null;
@@ -101,11 +98,11 @@ public class hangman {
 					String sql = "select * from(" + " select * from game where type = 'food'"
 							+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
 					psmt = conn.prepareStatement(sql);
-					cnt = psmt.executeQuery();
-					if (cnt.next()) {
-						answerWord = cnt.getString("word");
+					rs = psmt.executeQuery();
+					if (rs.next()) {
+						answerWord = rs.getString("word");
 						words = new MemberVO(answerWord);
-						answerWord = words.getwords();
+//						answerWord = words.getwords();
 						scorePlus = 250;
 					} else {
 						words = null;
@@ -114,11 +111,11 @@ public class hangman {
 					String sql = "select * from(" + " select * from game where type = 'brand'"
 							+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
 					psmt = conn.prepareStatement(sql);
-					cnt = psmt.executeQuery();
-					if (cnt.next()) {
-						answerWord = cnt.getString("word");
+					rs = psmt.executeQuery();
+					if (rs.next()) {
+						answerWord = rs.getString("word");
 						words = new MemberVO(answerWord);
-						answerWord = words.getwords();
+//						answerWord = words.getwords();
 						scorePlus = 250;
 					} else {
 						words = null;
@@ -128,12 +125,12 @@ public class hangman {
 					String sql = "select * from(" + " select * from game where type = 'name'"
 							+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
 					psmt = conn.prepareStatement(sql);
-					cnt = psmt.executeQuery();
-					if (cnt.next()) {
-						answerWord = cnt.getString("word");
+					rs = psmt.executeQuery();
+					if (rs.next()) {
+						answerWord = rs.getString("word");
 						
 						words = new MemberVO(answerWord);
-						answerWord = words.getwords();
+//						answerWord = words.getwords();
 						scorePlus = 300;
 					} else {
 						words = null;
@@ -149,8 +146,13 @@ public class hangman {
 				int chance = 6;
 				while (true) {
 					
-					System.out.println( Arrays.toString(answer));
-					System.out.println( Arrays.toString(problem));
+					
+					for (int i = 0; i < answer.length; i++) {
+						System.out.print(answer[i]+" ");
+					}System.out.println();
+					for (int i = 0; i < answer.length; i++) {
+						System.out.print(problem[i]+" ");
+					}System.out.println();
 					boolean check = false;
 					boolean checkreal = false;
 					System.out.print("영어단어를 입력하세요. : ");
@@ -163,6 +165,7 @@ public class hangman {
 					}
 					for (int i = 0; i < answer.length; i++) {
 						if(answer[i] != problem[i]) {
+							checkreal = false;
 							break;
 						}
 						checkreal = true;
@@ -173,6 +176,7 @@ public class hangman {
 					if (checkreal == true) {
 						System.out.println("성공");
 						score = score + scorePlus;
+						System.out.println("점수  : " + score);
 						break;
 					}
 					if (chance == 0) {
@@ -190,7 +194,7 @@ public class hangman {
 				System.out.println("게임 종료");
 				break;
 			}
-
+			dao.close();
 		}
 
 	}
