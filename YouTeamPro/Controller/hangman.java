@@ -242,9 +242,10 @@ public class hangman {
 				System.out.println("실패");
 				return life;
 			}
-			if(life == 0) {
+			if (life == 0) {
 				return life;
 			}
 		}
+		return life;
 	}
 }
