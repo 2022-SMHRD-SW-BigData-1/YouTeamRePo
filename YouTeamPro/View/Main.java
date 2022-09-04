@@ -82,15 +82,22 @@ public class Main {
 				System.out.println("게임을 종료합니다.");
 				break;
 			}
+			
 
 		}
 		if (menu == 2) {
 			rt = play.getword();
+		
+			
+			
 		}
+		
+		
 		int score = rt[0];
-		int time = rt[1];
-		System.out.println(score);
-		dao.lastScoreTime(id, time, score);
+		int time = rt[1];	
+		String grade ="";
+		//System.out.println(score);
+		System.out.println(dao.lastScoreTime(id, time, score, grade));
 
 	}
 }

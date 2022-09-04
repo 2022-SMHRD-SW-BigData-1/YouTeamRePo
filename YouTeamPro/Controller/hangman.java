@@ -24,7 +24,7 @@ public class hangman {
 	ResultSet rs;
 	String answerWord = null;
 	DAO dao = new DAO();
-
+	static int life = 3;
 	public void getCon() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -41,9 +41,10 @@ public class hangman {
 
 	public int[] getword() {
 		getCon();
-		int life = 3;
+		//int life = 3;
 		int[] rt = new int[2];
-		int resultTime = 0;
+		long resultTime = 0;
+		long minus =0;
 		while (true) {
 			count = 0;
 			int num1 = 1;
@@ -56,10 +57,12 @@ public class hangman {
 			case 1:
 				System.out.print("카테고리선택 : \n[1]동물 [2]나라    ");
 				num2 = sc.nextInt();
+				resultTime= System.currentTimeMillis();
 				break;
 			case 2:
 				System.out.print("카테고리선택 : \n[1]음식 [2]브랜드명    ");
 				num2 = sc.nextInt();
+				resultTime= System.currentTimeMillis();
 				break;
 			}
 
@@ -73,17 +76,23 @@ public class hangman {
 						rs = psmt.executeQuery();
 						if (rs.next()) {
 							answerWord = rs.getString("word");
-							System.out.println(answerWord);
+							//System.out.println(answerWord);
 							words = new MemberVO(answerWord);
-							System.out.println(answerWord);
+							//System.out.println(answerWord);
 							scorePlus = 200;
-							System.out.println("life : " + life);
-							playGame(answerWord, life);
+						//	System.out.println("life : " + life+);
+							playGame(answerWord);
+							
+						
 						} else {
 							words = null;
 						}
+						System.out.println(life);
 						if (life == 0) {
-							break;
+						long resultTimeend = System.currentTimeMillis();
+						minus = (resultTimeend -resultTime);
+						System.out.println( "게임실행 시간 : " + minus/1000.0 +"초");
+						break;
 						}
 					}
 				} else if (num1 == 1 && num2 == 2) {
@@ -96,13 +105,17 @@ public class hangman {
 							answerWord = rs.getString("word");
 							words = new MemberVO(answerWord);
 							scorePlus = 200;
-							playGame(answerWord, life);
+							playGame(answerWord);
 						} else {
 							words = null;
 						}
+						System.out.println(life);
+						if (life == 0) {
+							
+						break;
 					}
 				}
-				if (num1 == 2 && num2 == 1) {
+				}	if (num1 == 2 && num2 == 1) {
 					while (count < 5) {
 						String sql = "select * from(" + " select * from game where type = 'food'"
 								+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
@@ -112,9 +125,14 @@ public class hangman {
 							answerWord = rs.getString("word");
 							words = new MemberVO(answerWord);
 							scorePlus = 250;
-							playGame(answerWord, life);
+							playGame(answerWord);
 						} else {
 							words = null;
+						}
+						System.out.println(life);
+						if (life == 0) {
+							
+						break;
 						}
 					}
 				} else if (num2 == 2 && num2 == 2) {
@@ -128,13 +146,17 @@ public class hangman {
 							answerWord = rs.getString("word");
 							words = new MemberVO(answerWord);
 							scorePlus = 250;
-							playGame(answerWord, life);
+							playGame(answerWord);
 						} else {
 							words = null;
 						}
+						System.out.println(life);
+						if (life == 0) {
+							
+						break;
 					}
 				}
-				if (num1 == 3) {
+				}if (num1 == 3) {
 					while (count < 5) {
 
 						String sql = "select * from(" + " select * from game where type = 'name'"
@@ -145,11 +167,16 @@ public class hangman {
 							answerWord = rs.getString("word");
 							words = new MemberVO(answerWord);
 							scorePlus = 300;
-							playGame(answerWord, life);
+							playGame(answerWord);
 						} else {
 							words = null;
 						}
+						System.out.println(life);
+						if (life == 0) {
+							
+						break;
 					}
+				}
 				}
 				while (true) {
 					System.out.println("계속하시겠습니까(y/n)");
@@ -159,12 +186,13 @@ public class hangman {
 					if (a.equals(b)) {
 						System.out.println("게임 종료");
 						dao.close();
-						System.out.println(score);
+						//System.out.println(score);
 						rt[0] = score;
-						rt[1] = resultTime;
+						rt[1] = (int) minus;					
 						return rt;
 
 					} else if (a.equals(c)) {
+						life = 3;
 						break;
 
 					} else {
@@ -177,19 +205,19 @@ public class hangman {
 			} finally {
 				dao.close();
 			}
-			if (life < 0) {
-				System.out.println("게임 종료");
-				dao.close();
-				System.out.println(score);
-				rt[0] = score;
-				rt[1] = resultTime;
-				return rt;
+//			if (life < 0) {
+//				System.out.println("게임 종료");
+//				dao.close();
+//				System.out.println(score);
+//				rt[0] = score;
+//				rt[1] = resultTime;
+//				return rt;
 			}
 		}
 
-	}
+//	}
 
-	public static int playGame(String answerWord, int life) {
+	public static int playGame(String answerWord) {
 		Scanner sc = new Scanner(System.in);
 		char[] problem = new char[answerWord.length()];
 		char[] answer = new char[answerWord.length()];
@@ -198,9 +226,9 @@ public class hangman {
 			problem[i] = answerWord.charAt(i);
 			answer[i] = '_';
 		}
-		int chance = 1;
+		int chance = 3;
 		while (true) {
-
+			System.out.println("life :"+life+"\t"+"남은 찬스 횟수:"+chance);
 			for (int i = 0; i < answer.length; i++) {
 				System.out.print(answer[i] + " ");
 			}
@@ -212,6 +240,7 @@ public class hangman {
 			boolean check = false;
 			boolean checkreal = false;
 			System.out.print("영어단어를 입력하세요. : ");
+			
 			char input = sc.next().charAt(0);
 			for (int i = 0; i < answer.length; i++) {
 				if (input == problem[i]) {
@@ -226,8 +255,15 @@ public class hangman {
 				}
 				checkreal = true;
 			}
-			if (check == false) {
+			if (check == false && chance > 0) {
 				chance--;
+		//		
+//				if(chance == 0) {
+//					System.out.println("life : " + life);
+//					life--;
+//					System.out.println("실패");
+//				}
+		//		
 			}
 			if (checkreal == true) {
 				System.out.println("성공");
@@ -236,16 +272,22 @@ public class hangman {
 				count++;
 				break;
 			}
-			if (chance == 0) {
-				life--;
-				System.out.println("life : " + life);
+			if (chance == 0 && check == false) {
+			//	System.out.println("life : " + life);
 				System.out.println("실패");
-				return life;
+				life--;
+			//	return life;
+				
 			}
+			
 			if (life == 0) {
-				return life;
+				System.out.println("죽었습니다.");
+				System.out.println("점수  : " + score);
+				return score;
 			}
 		}
-		return life;
+		return score;
 	}
+	
+
 }

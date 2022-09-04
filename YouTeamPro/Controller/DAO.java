@@ -149,17 +149,18 @@ public class DAO {
 		return cnt;
 	}
 
-	public int lastScoreTime(String id, int time, int score) {
+	public int lastScoreTime(String id, int time, int score, String grade) {
 		int cnt = 0;
 		try {
 			getCon();
-			String sql = "update user_Info set score = ? ,times = ? where id = ?";
+			String sql = "update user_Info set score = ? ,times = ?, grade = ? where id = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, score);
 			psmt.setInt(2, time);
-			psmt.setString(3, id);
+			psmt.setString(3, grade);
+			psmt.setString(4, id);
 			cnt = psmt.executeUpdate();
-			System.out.println("아이디 : " + id + "\t점수 : " + score + "\t 시간 : " + time);
+			System.out.println("아이디 : " + id + "\t점수 : " + score + "\t 시간 : " + time/1000.0+"초\t"+"티어 : "+grade);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
