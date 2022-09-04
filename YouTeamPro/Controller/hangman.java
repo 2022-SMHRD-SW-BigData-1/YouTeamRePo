@@ -94,6 +94,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
+							System.out.println("사람사망");
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -126,6 +127,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
+							System.out.println("사람사망");
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -158,6 +160,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
+							System.out.println("사람사망");
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -189,6 +192,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
+							System.out.println("사람사망");
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -220,6 +224,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
+							System.out.println("사람사망");
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -229,7 +234,7 @@ public class hangman {
 					}
 				}
 				while (true) {
-
+					
 					System.out.println("계속하시겠습니까(y/n)");
 
 					String a = sc.next();
@@ -262,12 +267,14 @@ public class hangman {
 		Scanner sc = new Scanner(System.in);
 		char[] problem = new char[answerWord.length()];
 		char[] answer = new char[answerWord.length()];
-
+		
+		
+		System.out.println("사람모양");
 		for (int i = 0; i < problem.length; i++) {
 			problem[i] = answerWord.charAt(i);
 			answer[i] = '_';
 		}
-		int chance = 3;
+		int chance = 5;
 		while (true) {
 			System.out.println("life :" + life + "\t" + "남은 찬스 횟수:" + chance);
 			for (int i = 0; i < answer.length; i++) {
@@ -298,6 +305,16 @@ public class hangman {
 			}
 			if (check == false && chance > 0) {
 				chance--;
+				if(chance==4) {
+					
+					System.out.println("팔짤림");
+				}else if(chance==3) {
+					System.out.println("다리짤림");
+				}else if(chance==2) {
+					System.out.println(2);
+				}else if(chance==1) {
+					System.out.println(1);
+				}
 			}
 			if (checkreal == true) {
 				System.out.println("성공");
@@ -307,6 +324,7 @@ public class hangman {
 				break;
 			}
 			if (chance == 0 && check == false) {
+				
 				System.out.println("실패");
 				life--;
 				break;

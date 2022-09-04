@@ -33,6 +33,7 @@ public class Main {
 		while (true) {
 			System.out.print("[1]회원가입 [2]로그인 [3]전체랭킹확인 [4]회원탈퇴 [5]게임종료>> ");
 			MusicPlayer player = new MusicPlayer();
+			player.stop();
 			MusicVO m = player.play(3);
 			menu = sc.nextInt();
 			if (menu == 1) {
