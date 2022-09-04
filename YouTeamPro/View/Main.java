@@ -22,7 +22,6 @@ public class Main {
 		int menu = 0;
 		String id = null;
 		int[] rt = new int[2];
-
 		while (true) {
 			System.out.print("[1]회원가입 [2]로그인 [3]전체랭킹확인 [4]회원탈퇴 [5]게임종료>> ");
 			menu = sc.nextInt();
@@ -35,7 +34,6 @@ public class Main {
 				System.out.print("닉네임 >> ");
 				String nick = sc.next();
 				dao.getCon();
-
 				int cnt = dao.join(id, pw, nick);
 				if (cnt > 0) {
 					System.out.println("회원가입 되었습니다.");
@@ -43,7 +41,6 @@ public class Main {
 					System.out.println("다른 회원이 있습니다.");
 				}
 			} else if (menu == 2) {
-
 				System.out.print("아이디 : ");
 				id = sc.next();
 				System.out.print("비밀번호 : ");
@@ -51,13 +48,15 @@ public class Main {
 				boolean res = dao.login(id, pw);
 				if (res == true) {
 					System.out.println("로그인 SUCCESS!");
-					break;
+					rt = play.getword();
+					int score = rt[0];
+					int time = rt[1];
+					String grade = "";
+					dao.lastScoreTime(id, time, score, grade);
 				} else {
 					System.out.println("로그인 Fail..");
 				}
-
 			} else if (menu == 3) {
-				// 수민팀장님
 				ArrayList<MemberVO> list = dao.select();
 				System.out.println("ID\t닉네임\t점수\t티어\t플레이타임");
 				for (int i = 0; i < list.size(); i++) {
@@ -65,7 +64,7 @@ public class Main {
 					System.out.print(list.get(i).getNick() + "\t");
 					System.out.print(list.get(i).getScore() + "\t");
 					System.out.print(list.get(i).getGrade() + "\t");
-					System.out.println(list.get(i).getTimes()/1000.0 + "초\t");
+					System.out.println(list.get(i).getTimes() / 1000.0 + "초\t");
 				}
 			} else if (menu == 4) {
 				System.out.print("아이디 >> ");
@@ -82,20 +81,6 @@ public class Main {
 				System.out.println("게임을 종료합니다.");
 				break;
 			}
-			
-
 		}
-		if (menu == 2) {
-			rt = play.getword();
-			
-		}
-		
-		
-		int score = rt[0];
-		int time = rt[1];	
-		String grade ="";
-		//System.out.println(score);
-		dao.lastScoreTime(id, time, score, grade);
-	
 	}
 }

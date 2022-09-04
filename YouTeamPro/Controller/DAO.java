@@ -23,11 +23,6 @@ public class DAO {
 
 			conn = DriverManager.getConnection(url, db_id, db_pw);
 
-//			if (conn != null) {
-//				System.out.println("접속 성공");
-//			} else {
-//				System.out.println("접속 실패");
-//			}
 		} catch (Exception e) {
 			System.out.println("오류");
 			e.printStackTrace();
@@ -47,7 +42,6 @@ public class DAO {
 			e.printStackTrace();
 			System.out.println("자원반납 시 오류");
 		}
-
 	}
 
 	// 회원가입
@@ -101,12 +95,12 @@ public class DAO {
 		return false;
 	}
 
-	// 3.전체 랭킹확인 -> 수민팀장님
+	// 랭킹조회
 	public ArrayList<MemberVO> select() {
 		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
 		try {
 			getCon();
-			String sql = "select * from user_info";
+			String sql = "select * from user_info order by score desc, times asc";
 			psmt = conn.prepareStatement(sql);
 			rs = psmt.executeQuery();
 
@@ -153,6 +147,13 @@ public class DAO {
 		int cnt = 0;
 		try {
 			getCon();
+			if (score <= 500) {
+				grade = "3티어";
+			} else if (score > 500 && score <= 1000) {
+				grade = "2티어";
+			} else if (score > 1000) {
+				grade = "1티어";
+			}
 			String sql = "update user_Info set score = ? ,times = ?, grade = ? where id = ?";
 			psmt = conn.prepareStatement(sql);
 			psmt.setInt(1, score);
@@ -160,15 +161,9 @@ public class DAO {
 			psmt.setString(3, grade);
 			psmt.setString(4, id);
 			cnt = psmt.executeUpdate();
-			if(score <= 500) {
-				grade = "3티어";
-			}else if(score > 500 && score <= 1000) {
-				grade = "2티어";
-			}else if(score > 1000){
-				grade = "1티어";
-			}
-			
-			System.out.println("아이디 : " + id + "\t점수 : " + score + "\t 시간 : " + time/1000.0+"초\t"+"티어 : "+grade);
+
+			System.out
+					.println("아이디 : " + id + "\t점수 : " + score + "\t 시간 : " + time / 1000.0 + "초" + "\t티어 : " + grade);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
