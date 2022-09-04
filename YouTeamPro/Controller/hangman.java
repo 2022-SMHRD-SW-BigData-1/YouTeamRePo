@@ -94,7 +94,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
-							System.out.println("사람사망");
+							death();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -127,7 +127,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
-							System.out.println("사람사망");
+							death();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -160,7 +160,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
-							System.out.println("사람사망");
+							death();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -192,7 +192,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
-							System.out.println("사람사망");
+							death();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -224,7 +224,7 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
-							System.out.println("사람사망");
+							death();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
 							break;
 						}
@@ -269,7 +269,26 @@ public class hangman {
 		char[] answer = new char[answerWord.length()];
 		
 		
-		System.out.println("사람모양");
+		System.out.println("                       -@@@=             \\r\\n\"\r\n"
+				+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
+				+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
+				+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
+				+ "				+ \"             :#=,             \\r\\n\"\r\n"
+				+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
+				+ "				+ \"          !@@@@@@@@,          \\r\\n\"\r\n"
+				+ "				+ \"        =@@@@@@@@@@@@,        \\r\\n\"\r\n"
+				+ "				+ \"        @@@=@@@@@@:@@*        \\r\\n\"\r\n"
+				+ "				+ \"       ;@@,=@@@@@@,=@@.       \\r\\n\"\r\n"
+				+ "				+ \"       ;@@ $@@@@@@,;@@.       \\r\\n\"\r\n"
+				+ "				+ \"        :- $@@@@@@- :-        \\r\\n\"\r\n"
+				+ "				+ \"           #@@!!@@;           \\r\\n\"\r\n"
+				+ "				+ \"           @@# ,@@!           \\r\\n\"\r\n"
+				+ "				+ \"           @@# .@@*           \\r\\n\"\r\n"
+				+ "				+ \"          .@@*  @@$           \\r\\n\"\r\n"
+				+ "				+ \"          ~@@~  $@@           \\r\\n\"\r\n"
+				+ "				+ \"          :@@-  =@@           \\r\\n\"\r\n"
+				+ "				+ \"          ;@@,  =@@.          \\r\\n\"\r\n"
+				+ "				+ \"          -@@   :@#         \");");
 		for (int i = 0; i < problem.length; i++) {
 			problem[i] = answerWord.charAt(i);
 			answer[i] = '_';
@@ -307,13 +326,82 @@ public class hangman {
 				chance--;
 				if(chance==4) {
 					
-					System.out.println("팔짤림");
+					System.out.println("                    -@@@=             \\r\\n\"\r\n"
+							+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
+							+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
+							+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
+							+ "				+ \"             :#=,             \\r\\n\"\r\n"
+							+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
+							+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
+							+ "				+ \"           @@@@@@@@@@,        \\r\\n\"\r\n"
+							+ "				+ \"           =@@@@@@:@@*        \\r\\n\"\r\n"
+							+ "				+ \"           =@@@@@@,=@@.       \\r\\n\"\r\n"
+							+ "				+ \"           $@@@@@@,;@@.       \\r\\n\"\r\n"
+							+ "				+ \"           $@@@@@@- :-        \\r\\n\"\r\n"
+							+ "				+ \"           #@@!!@@;           \\r\\n\"\r\n"
+							+ "				+ \"           @@# ,@@!           \\r\\n\"\r\n"
+							+ "				+ \"           @@# .@@*           \\r\\n\"\r\n"
+							+ "				+ \"          .@@*  @@$           \\r\\n\"\r\n"
+							+ "				+ \"          ~@@~  $@@           \\r\\n\"\r\n"
+							+ "				+ \"          :@@-  =@@           \\r\\n\"\r\n"
+							+ "				+ \"          ;@@,  =@@.          \\r\\n\"\r\n"
+							+ "				+ \"          -@@   :@#         \");");
 				}else if(chance==3) {
-					System.out.println("다리짤림");
+					System.out.println("                    -@@@=             \\r\\n\"\r\n"
+							+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
+							+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
+							+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
+							+ "				+ \"             :#=,             \\r\\n\"\r\n"
+							+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
+							+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
+							+ "				+ \"           @@@@@@@@           \\r\\n\"\r\n"
+							+ "				+ \"           =@@@@@@:           \\r\\n\"\r\n"
+							+ "				+ \"           =@@@@@@,           \\r\\n\"\r\n"
+							+ "				+ \"           $@@@@@@,           \\r\\n\"\r\n"
+							+ "				+ \"           $@@@@@@-           \\r\\n\"\r\n"
+							+ "				+ \"           #@@!!@@;           \\r\\n\"\r\n"
+							+ "				+ \"           @@# ,@@!           \\r\\n\"\r\n"
+							+ "				+ \"           @@# .@@*           \\r\\n\"\r\n"
+							+ "				+ \"          .@@*  @@$           \\r\\n\"\r\n"
+							+ "				+ \"          ~@@~  $@@           \\r\\n\"\r\n"
+							+ "				+ \"          :@@-  =@@           \\r\\n\"\r\n"
+							+ "				+ \"          ;@@,  =@@.          \\r\\n\"\r\n"
+							+ "				+ \"          -@@   :@#         \");");
 				}else if(chance==2) {
-					System.out.println(2);
+					System.out.println("                    -@@@=             \\r\\n\"\r\n"
+							+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
+							+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
+							+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
+							+ "				+ \"             :#=,             \\r\\n\"\r\n"
+							+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
+							+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
+							+ "				+ \"           @@@@@@@@           \\r\\n\"\r\n"
+							+ "				+ \"           =@@@@@@:           \\r\\n\"\r\n"
+							+ "				+ \"           =@@@@@@,           \\r\\n\"\r\n"
+							+ "				+ \"           $@@@@@@,           \\r\\n\"\r\n"
+							+ "				+ \"           $@@@@@@-           \\r\\n\"\r\n"
+							+ "				+ \"              !!@@;           \\r\\n\"\r\n"
+							+ "				+ \"               ,@@!           \\r\\n\"\r\n"
+							+ "				+ \"               .@@*           \\r\\n\"\r\n"
+							+ "				+ \"                @@$           \\r\\n\"\r\n"
+							+ "				+ \"                $@@           \\r\\n\"\r\n"
+							+ "				+ \"                =@@           \\r\\n\"\r\n"
+							+ "				+ \"                =@@.          \\r\\n\"\r\n"
+							+ "				+ \"                :@#         \");");
 				}else if(chance==1) {
-					System.out.println(1);
+					System.out.println("                    -@@@=             \\r\\n\"\r\n"
+							+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
+							+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
+							+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
+							+ "				+ \"             :#=,             \\r\\n\"\r\n"
+							+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
+							+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
+							+ "				+ \"           @@@@@@@@           \\r\\n\"\r\n"
+							+ "				+ \"           =@@@@@@:           \\r\\n\"\r\n"
+							+ "				+ \"           =@@@@@@,           \\r\\n\"\r\n"
+							+ "				+ \"           $@@@@@@,           \\r\\n\"\r\n"
+							+ "				+ \"           $@@@@@@-           \\r\\n\"\r\n"
+							+ "				+ \"                            \");");
 				}
 			}
 			if (checkreal == true) {
@@ -324,8 +412,17 @@ public class hangman {
 				break;
 			}
 			if (chance == 0 && check == false) {
-				
-				System.out.println("실패");
+				System.out.println("                                      \\r\\n\"\r\n"
+						+ "				+ \"             :#=,             \\r\\n\"\r\n"
+						+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
+						+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
+						+ "				+ \"           @@@@@@@@           \\r\\n\"\r\n"
+						+ "				+ \"           =@@@@@@:           \\r\\n\"\r\n"
+						+ "				+ \"           =@@@@@@,           \\r\\n\"\r\n"
+						+ "				+ \"           $@@@@@@,           \\r\\n\"\r\n"
+						+ "				+ \"           $@@@@@@-           \\r\\n\"\r\n"
+						+ "				+ \"                            \");");
+				System.out.println("부활했습니다.");
 				life--;
 				break;
 
@@ -347,6 +444,20 @@ public class hangman {
 			}
 		}
 		return false;
+	}
+	public void death() {
+		System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\r\n"
+				+ "ZZZZEEZZZZZZZZZZZZZEEZZZZZZZZZZZZZZEZZZZ\r\n" + "ZZZ9EZZZZZDwZZZZZZ9EZZZZZDwEZZZZZE9ZZZZZ\r\n"
+				+ "ZZ9ZZZZZZZZZZZZZZ9ZZZZZZZZZZZZZZEZZZZZZE\r\n" + "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\r\n"
+				+ "ZZZZZZZZZZEZ8ZZZZZZZZZZZZZZ8ZEZZZZZZZZZZ\r\n" + "ZZZz9Z9Z9     zZZZB8ZZZZZZ     ZZjZZZZZZ\r\n"
+				+ "ZZZZZZ     ZZw  ZZz9ZZZZ  wZZ     ZZZZZZ\r\n" + "ZZZZ ZZZ   BZw   ZZZZZZ   wZB   ZZZ zZZZ\r\n"
+				+ "ZZZZ ZZZ   ZZ    ZZZZZZ    ZZ   ZZZ ZZZZ\r\n" + "ZZZ   ZZZ9       ZZEEZZ       8ZZZ   ZZZ\r\n"
+				+ "ZZZ  Z,ZZZZEEZZZ ZZZZZZ ZEz9ZZZZZyZ  ZZZ\r\n" + "ZZZZ   ZDZZZZZZZZ      ZZZZZZZZEz   ZZZZ\r\n"
+				+ "ZZZZZ     jZZZZZZZZ  9ZZZZZZZW     ZZZZZ\r\n" + "ZZZZZZ  y w   jzDZ    Z58j    w   ZZZZZZ\r\n"
+				+ "ZZZ58ZZZ  y  Z Z ZZ  ZZ Z Z y   ZZZZZZZZ\r\n" + "ZZZ8ZZZZZD       B Z  y w 5   8ZZZZZZZZE\r\n"
+				+ "ZZZZZZZZZZZZZ9,D   W B Wy,DZZZZZZZZZZZZZ\r\n" + "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\r\n"
+				+ "ZZZZ9EZZZZZEZZZZZZZEZZZZZZEZZZZZZZ9EZZZZ\r\n" + "ZZZ9ZZZZZZByZZZZZZ9ZZZZZZBjEZZZZZ9EZZZZZ\r\n"
+				+ "ZZEZZZZZZZZZZZZZZEZZZZZZZZZZZZZZEZZZZZZZ\r\n" + "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
 	}
 
 }
