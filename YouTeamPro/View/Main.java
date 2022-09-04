@@ -65,7 +65,7 @@ public class Main {
 					System.out.print(list.get(i).getNick() + "\t");
 					System.out.print(list.get(i).getScore() + "\t");
 					System.out.print(list.get(i).getGrade() + "\t");
-					System.out.println(list.get(i).getTimes() + "\t");
+					System.out.println(list.get(i).getTimes()/1000.0 + "초\t");
 				}
 			} else if (menu == 4) {
 				System.out.print("아이디 >> ");
@@ -87,8 +87,6 @@ public class Main {
 		}
 		if (menu == 2) {
 			rt = play.getword();
-		
-			
 			
 		}
 		
@@ -97,7 +95,7 @@ public class Main {
 		int time = rt[1];	
 		String grade ="";
 		//System.out.println(score);
-		System.out.println(dao.lastScoreTime(id, time, score, grade));
-
+		dao.lastScoreTime(id, time, score, grade);
+	
 	}
 }

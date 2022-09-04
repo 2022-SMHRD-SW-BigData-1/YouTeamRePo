@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Random;
@@ -16,6 +17,7 @@ public class hangman {
 	static int score = 0;
 	static int scorePlus = 0;
 	static int count = 0;
+	static long totalTime = 0;
 
 	Scanner sc = new Scanner(System.in);
 	Random rd = new Random();
@@ -25,6 +27,7 @@ public class hangman {
 	String answerWord = null;
 	DAO dao = new DAO();
 	static int life = 3;
+
 	public void getCon() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
@@ -41,11 +44,17 @@ public class hangman {
 
 	public int[] getword() {
 		getCon();
-		//int life = 3;
+		// int life = 3;
 		int[] rt = new int[2];
 		long resultTime = 0;
-		long minus =0;
+		long start = 0;
+		long minus = 0;
+		long restart = 0;
+		long restartend = 0;
+
 		while (true) {
+			ArrayList<String> Duplicate = new ArrayList();
+			Duplicate.add("null");
 			count = 0;
 			int num1 = 1;
 			int num2 = 1;
@@ -57,12 +66,12 @@ public class hangman {
 			case 1:
 				System.out.print("카테고리선택 : \n[1]동물 [2]나라    ");
 				num2 = sc.nextInt();
-				resultTime= System.currentTimeMillis();
+				resultTime = System.currentTimeMillis();
 				break;
 			case 2:
 				System.out.print("카테고리선택 : \n[1]음식 [2]브랜드명    ");
 				num2 = sc.nextInt();
-				resultTime= System.currentTimeMillis();
+				resultTime = System.currentTimeMillis();
 				break;
 			}
 
@@ -70,136 +79,193 @@ public class hangman {
 
 				if (num1 == 1 && num2 == 1) {
 					while (count < 5) {
+						while (true) {
+							String sql = "select * from( select * from game where type = 'animal' order by DBMS_RANDOM.RANDOM) where rownum < 2";
+							psmt = conn.prepareStatement(sql);
+							rs = psmt.executeQuery();
+							if (rs.next()) {
+								answerWord = rs.getString("word");
+								words = new MemberVO(answerWord);
+								scorePlus = 200;
+							} else {
+								words = null;
+							}
+							boolean Ducheck = DuCheck(Duplicate);
 
-						String sql = "select * from( select * from game where type = 'animal' order by DBMS_RANDOM.RANDOM) where rownum < 2";
-						psmt = conn.prepareStatement(sql);
-						rs = psmt.executeQuery();
-						if (rs.next()) {
-							answerWord = rs.getString("word");
-							//System.out.println(answerWord);
-							words = new MemberVO(answerWord);
-							//System.out.println(answerWord);
-							scorePlus = 200;
-						//	System.out.println("life : " + life+);
-							playGame(answerWord);
-							
-						
-						} else {
-							words = null;
+							if (Ducheck == false) {
+								break;
+							}
 						}
-						System.out.println(life);
+						Duplicate.add(answerWord);
+						playGame(answerWord);
 						if (life == 0) {
-						long resultTimeend = System.currentTimeMillis();
-						minus = (resultTimeend -resultTime);
-						System.out.println( "게임실행 시간 : " + minus/1000.0 +"초");
-						break;
+							long resultTimeend = System.currentTimeMillis();
+							minus = (resultTimeend - resultTime);
+							totalTime += minus;
+
+							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+
+							break;
 						}
 					}
+
 				} else if (num1 == 1 && num2 == 2) {
 					while (count < 5) {
-						String sql = "select * from(" + " select * from game where type = 'country'"
-								+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
-						psmt = conn.prepareStatement(sql);
-						rs = psmt.executeQuery();
-						if (rs.next()) {
-							answerWord = rs.getString("word");
-							words = new MemberVO(answerWord);
-							scorePlus = 200;
-							playGame(answerWord);
-						} else {
-							words = null;
+						while (true) {
+							String sql = "select * from(" + " select * from game where type = 'country'"
+									+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
+							psmt = conn.prepareStatement(sql);
+							rs = psmt.executeQuery();
+							if (rs.next()) {
+								answerWord = rs.getString("word");
+								words = new MemberVO(answerWord);
+								scorePlus = 200;
+							} else {
+								words = null;
+							}
+							boolean Ducheck = DuCheck(Duplicate);
+
+							if (Ducheck == false) {
+								break;
+							}
 						}
-						System.out.println(life);
+						Duplicate.add(answerWord);
+						playGame(answerWord);
 						if (life == 0) {
-							
-						break;
+							long resultTimeend = System.currentTimeMillis();
+							minus = (resultTimeend - resultTime);
+							totalTime += minus;
+
+							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+							break;
+						}
 					}
 				}
-				}	if (num1 == 2 && num2 == 1) {
+				if (num1 == 2 && num2 == 1) {
 					while (count < 5) {
-						String sql = "select * from(" + " select * from game where type = 'food'"
-								+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
-						psmt = conn.prepareStatement(sql);
-						rs = psmt.executeQuery();
-						if (rs.next()) {
-							answerWord = rs.getString("word");
-							words = new MemberVO(answerWord);
-							scorePlus = 250;
-							playGame(answerWord);
-						} else {
-							words = null;
+						while (true) {
+							String sql = "select * from(" + " select * from game where type = 'food'"
+									+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
+							psmt = conn.prepareStatement(sql);
+							rs = psmt.executeQuery();
+							if (rs.next()) {
+								answerWord = rs.getString("word");
+								words = new MemberVO(answerWord);
+								scorePlus = 250;
+							} else {
+								words = null;
+							}
+							boolean Ducheck = DuCheck(Duplicate);
+
+							if (Ducheck == false) {
+								break;
+							}
 						}
-						System.out.println(life);
+						Duplicate.add(answerWord);
+						playGame(answerWord);
+						// System.out.println(life);
 						if (life == 0) {
-							
-						break;
+							long resultTimeend = System.currentTimeMillis();
+							minus = (resultTimeend - resultTime);
+							totalTime += minus;
+
+							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+							break;
 						}
 					}
 				} else if (num2 == 2 && num2 == 2) {
 					while (count < 5) {
+						while (true) {
+							String sql = "select * from(" + " select * from game where type = 'brand'"
+									+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
+							psmt = conn.prepareStatement(sql);
+							rs = psmt.executeQuery();
+							if (rs.next()) {
+								answerWord = rs.getString("word");
+								words = new MemberVO(answerWord);
+								scorePlus = 250;
+							} else {
+								words = null;
+							}
+							boolean Ducheck = DuCheck(Duplicate);
 
-						String sql = "select * from(" + " select * from game where type = 'brand'"
-								+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
-						psmt = conn.prepareStatement(sql);
-						rs = psmt.executeQuery();
-						if (rs.next()) {
-							answerWord = rs.getString("word");
-							words = new MemberVO(answerWord);
-							scorePlus = 250;
-							playGame(answerWord);
-						} else {
-							words = null;
+							if (Ducheck == false) {
+								break;
+							}
 						}
-						System.out.println(life);
+						Duplicate.add(answerWord);
+						playGame(answerWord);
+						// System.out.println(life);
 						if (life == 0) {
-							
-						break;
+							long resultTimeend = System.currentTimeMillis();
+							minus = (resultTimeend - resultTime);
+							totalTime += minus;
+
+							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+							break;
+						}
 					}
 				}
-				}if (num1 == 3) {
+				if (num1 == 3) {
 					while (count < 5) {
+						while (true) {
+							String sql = "select * from(" + " select * from game where type = 'name'"
+									+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
+							psmt = conn.prepareStatement(sql);
+							rs = psmt.executeQuery();
+							if (rs.next()) {
+								answerWord = rs.getString("word");
+								words = new MemberVO(answerWord);
+								scorePlus = 300;
+							} else {
+								words = null;
+							}
+							boolean Ducheck = DuCheck(Duplicate);
 
-						String sql = "select * from(" + " select * from game where type = 'name'"
-								+ " order by DBMS_RANDOM.RANDOM" + ") where rownum < 2";
-						psmt = conn.prepareStatement(sql);
-						rs = psmt.executeQuery();
-						if (rs.next()) {
-							answerWord = rs.getString("word");
-							words = new MemberVO(answerWord);
-							scorePlus = 300;
-							playGame(answerWord);
-						} else {
-							words = null;
+							if (Ducheck == false) {
+								break;
+							}
 						}
+						Duplicate.add(answerWord);
+						playGame(answerWord);
 						System.out.println(life);
 						if (life == 0) {
-							
-						break;
+							long resultTimeend = System.currentTimeMillis();
+							minus = (resultTimeend - resultTime);
+							totalTime += minus;
+
+							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+
+							break;
+						}
 					}
-				}
 				}
 				while (true) {
+
+					// restartend =System.currentTimeMillis();
 					System.out.println("계속하시겠습니까(y/n)");
+
 					String a = sc.next();
 					String b = "n";
 					String c = "y";
 					if (a.equals(b)) {
 						System.out.println("게임 종료");
 						dao.close();
-						//System.out.println(score);
+						// System.out.println(score);
 						rt[0] = score;
-						rt[1] = (int) minus;					
+						rt[1] = (int) totalTime;
 						return rt;
 
 					} else if (a.equals(c)) {
+						//
 						life = 3;
 						break;
 
 					} else {
 						System.out.println("다시입력해주세요");
 					}
+					// restartend =System.currentTimeMillis();
 				}
-
 			} catch (SQLException e) {
 				e.printStackTrace();
 			} finally {
@@ -212,8 +278,8 @@ public class hangman {
 //				rt[0] = score;
 //				rt[1] = resultTime;
 //				return rt;
-			}
 		}
+	}
 
 //	}
 
@@ -228,7 +294,7 @@ public class hangman {
 		}
 		int chance = 3;
 		while (true) {
-			System.out.println("life :"+life+"\t"+"남은 찬스 횟수:"+chance);
+			System.out.println("life :" + life + "\t" + "남은 찬스 횟수:" + chance);
 			for (int i = 0; i < answer.length; i++) {
 				System.out.print(answer[i] + " ");
 			}
@@ -240,7 +306,7 @@ public class hangman {
 			boolean check = false;
 			boolean checkreal = false;
 			System.out.print("영어단어를 입력하세요. : ");
-			
+
 			char input = sc.next().charAt(0);
 			for (int i = 0; i < answer.length; i++) {
 				if (input == problem[i]) {
@@ -257,13 +323,13 @@ public class hangman {
 			}
 			if (check == false && chance > 0) {
 				chance--;
-		//		
+				//
 //				if(chance == 0) {
 //					System.out.println("life : " + life);
 //					life--;
 //					System.out.println("실패");
 //				}
-		//		
+				//
 			}
 			if (checkreal == true) {
 				System.out.println("성공");
@@ -273,13 +339,14 @@ public class hangman {
 				break;
 			}
 			if (chance == 0 && check == false) {
-			//	System.out.println("life : " + life);
+				// System.out.println("life : " + life);
 				System.out.println("실패");
 				life--;
-			//	return life;
-				
+				break;
+				// return life;
+
 			}
-			
+
 			if (life == 0) {
 				System.out.println("죽었습니다.");
 				System.out.println("점수  : " + score);
@@ -288,6 +355,14 @@ public class hangman {
 		}
 		return score;
 	}
-	
+
+	public boolean DuCheck(ArrayList<String> Duplicate) {
+		for (int i = 0; i < Duplicate.size(); i++) {
+			if (answerWord.equals(Duplicate.get(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

@@ -149,7 +149,7 @@ public class DAO {
 		return cnt;
 	}
 
-	public int lastScoreTime(String id, int time, int score, String grade) {
+	public void lastScoreTime(String id, int time, int score, String grade) {
 		int cnt = 0;
 		try {
 			getCon();
@@ -160,13 +160,20 @@ public class DAO {
 			psmt.setString(3, grade);
 			psmt.setString(4, id);
 			cnt = psmt.executeUpdate();
+			if(score <= 500) {
+				grade = "3티어";
+			}else if(score > 500 && score <= 1000) {
+				grade = "2티어";
+			}else if(score > 1000){
+				grade = "1티어";
+			}
+			
 			System.out.println("아이디 : " + id + "\t점수 : " + score + "\t 시간 : " + time/1000.0+"초\t"+"티어 : "+grade);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
-		return cnt;
 	}
 
 }
