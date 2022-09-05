@@ -182,7 +182,7 @@ public class hangman {
 						minus = (resultTimeend - resultTime);
 						totalTime += minus;
 					}
-				} else if (num2 == 2 && num2 == 2) {
+				} else if (num1 == 2 && num2 == 2) {
 					resultTime = System.currentTimeMillis();
 					while (count < 5) {
 						while (true) {
@@ -256,12 +256,12 @@ public class hangman {
 					}
 				}
 				while (true) {
-					
 					System.out.println("계속하시겠습니까(y/n)");
 					String a = sc.next();
 					String b = "n";
 					String c = "y";
 					if (a.equals(b)) {
+						m = player.play(8);
 						s.endding();
 						dao.close();
 						rt[0] = score;
@@ -479,7 +479,7 @@ public class hangman {
 	}
 	public void death() {
 		MusicPlayer player = new MusicPlayer();
-		MusicVO m = player.play(8);
+		MusicVO m = player.play(7);
 		System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\r\n"
 				+ "ZZZZEEZZZZZZZZZZZZZEEZZZZZZZZZZZZZZEZZZZ\r\n" + "ZZZ9EZZZZZDwZZZZZZ9EZZZZZDwEZZZZZE9ZZZZZ\r\n"
 				+ "ZZ9ZZZZZZZZZZZZZZ9ZZZZZZZZZZZZZZEZZZZZZE\r\n" + "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\r\n"

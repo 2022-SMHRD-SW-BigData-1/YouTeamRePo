@@ -113,7 +113,7 @@ public class Story {
 		System.out.println("\n");
 		slowPrint("겨우겨우 숨겨진 입구를 찾아 왔건만",80);
 		System.out.println("\n");
-		slowPrint("스핑크스가 지키는 무덤일 줄은 상상도 못했다",80);
+		slowPrint("스핑크스가 지키는 무덤일 줄은 상상도 못했다 ",80);
 		slowPrint("하지만 우리가 누군가 왕국 최고의 트레져헌터팀인데",80);
 		System.out.println("\n");
 		slowPrint("스핑크스가 무서워서 도굴을 포기 할 순 없지 않나?",80);

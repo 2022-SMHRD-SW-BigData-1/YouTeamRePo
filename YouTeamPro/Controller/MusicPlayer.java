@@ -19,7 +19,8 @@ public class MusicPlayer {
 		musiclist.add(new MusicVO("5_찬스소진", "C://music/5_찬스소진.mp3"));
 		musiclist.add(new MusicVO("6_라이프깎임", "C://music/6_라이프깎임.mp3"));
 		musiclist.add(new MusicVO("7_죽음", "C://music/7_죽음.mp3"));
-		musiclist.add(new MusicVO("8_종료", "C://music/8_종료.mp3"));
+		musiclist.add(new MusicVO("8_엔딩", "C://music/8_엔딩.mp3"));
+	
 	
 	}
 
@@ -38,13 +39,7 @@ public class MusicPlayer {
 	
 	public MusicVO subPlay(int a) {
 		MusicVO m = musiclist.get(a);
-
-		if (mp3.isPlaying()) {
-			mp3.stop();
-		}
-
 		mp3.play(m.getMusicPath());
-
 		return m;
 
 	}
