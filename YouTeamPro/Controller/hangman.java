@@ -413,7 +413,6 @@ public class hangman {
 			}
 			if (chance == 0 && check == false) {
 				System.out.println("                                      \\r\\n\"\r\n"
-						+ "				+ \"             :#=,             \\r\\n\"\r\n"
 						+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
 						+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
 						+ "				+ \"           @@@@@@@@           \\r\\n\"\r\n"
