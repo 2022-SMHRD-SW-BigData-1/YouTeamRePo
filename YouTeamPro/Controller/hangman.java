@@ -6,18 +6,19 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.Scanner;
 
 import Model.MemberVO;
+import Model.MusicVO;
+import Model.Story;
 
 public class hangman {
 	static int score = 0;
 	static int scorePlus = 0;
 	static int count = 0;
 	static long totalTime = 0;
+	Story s = new Story();
 
 	Scanner sc = new Scanner(System.in);
 	Random rd = new Random();
@@ -43,6 +44,7 @@ public class hangman {
 	}
 
 	public int[] getword() {
+		MusicPlayer player = new MusicPlayer();
 		getCon();
 		int[] rt = new int[2];
 		long resultTime = 0;
@@ -56,6 +58,9 @@ public class hangman {
 			int num2 = 1;
 			ResultSet rs;
 			MemberVO words;
+		
+			player.stop();
+			MusicVO m = player.play(4);
 			System.out.print("난이도 선택 : \n[1]EASY [2]NORMAL [3]HARD    ");
 			num1 = sc.nextInt();
 			switch (num1) {
@@ -94,8 +99,11 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
+							
 							death();
+							player.stop();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+							life = 3;
 							break;
 						}
 						long resultTimeend = System.currentTimeMillis();
@@ -127,8 +135,11 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
+							
 							death();
+							player.stop();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+							life = 3;
 							break;
 						}
 						long resultTimeend = System.currentTimeMillis();
@@ -160,8 +171,11 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
+							
 							death();
+							player.stop();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+							life = 3;
 							break;
 						}
 						long resultTimeend = System.currentTimeMillis();
@@ -192,8 +206,11 @@ public class hangman {
 						Duplicate.add(answerWord);
 						playGame(answerWord);
 						if (life == 0) {
+							
 							death();
+							player.stop();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+							life = 3;
 							break;
 						}
 						long resultTimeend = System.currentTimeMillis();
@@ -223,9 +240,14 @@ public class hangman {
 						}
 						Duplicate.add(answerWord);
 						playGame(answerWord);
+						Duplicate.add(answerWord);
+						playGame(answerWord);
 						if (life == 0) {
+							
 							death();
+							player.stop();
 							System.out.println("게임실행 시간 : " + totalTime / 1000.0 + "초");
+							life = 3;
 							break;
 						}
 						long resultTimeend = System.currentTimeMillis();
@@ -236,12 +258,11 @@ public class hangman {
 				while (true) {
 					
 					System.out.println("계속하시겠습니까(y/n)");
-
 					String a = sc.next();
 					String b = "n";
 					String c = "y";
 					if (a.equals(b)) {
-						System.out.println("게임 종료");
+						s.endding();
 						dao.close();
 						rt[0] = score;
 						rt[1] = (int) totalTime;
@@ -265,30 +286,34 @@ public class hangman {
 
 	public static int playGame(String answerWord) {
 		Scanner sc = new Scanner(System.in);
+		MusicPlayer player = new MusicPlayer();
+		player.stop();
+		MusicVO m;
 		char[] problem = new char[answerWord.length()];
 		char[] answer = new char[answerWord.length()];
 		
 		
-		System.out.println("                       -@@@=             \\r\\n\"\r\n"
-				+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
-				+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
-				+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
-				+ "				+ \"             :#=,             \\r\\n\"\r\n"
-				+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
-				+ "				+ \"          !@@@@@@@@,          \\r\\n\"\r\n"
-				+ "				+ \"        =@@@@@@@@@@@@,        \\r\\n\"\r\n"
-				+ "				+ \"        @@@=@@@@@@:@@*        \\r\\n\"\r\n"
-				+ "				+ \"       ;@@,=@@@@@@,=@@.       \\r\\n\"\r\n"
-				+ "				+ \"       ;@@ $@@@@@@,;@@.       \\r\\n\"\r\n"
-				+ "				+ \"        :- $@@@@@@- :-        \\r\\n\"\r\n"
-				+ "				+ \"           #@@!!@@;           \\r\\n\"\r\n"
-				+ "				+ \"           @@# ,@@!           \\r\\n\"\r\n"
-				+ "				+ \"           @@# .@@*           \\r\\n\"\r\n"
-				+ "				+ \"          .@@*  @@$           \\r\\n\"\r\n"
-				+ "				+ \"          ~@@~  $@@           \\r\\n\"\r\n"
-				+ "				+ \"          :@@-  =@@           \\r\\n\"\r\n"
-				+ "				+ \"          ;@@,  =@@.          \\r\\n\"\r\n"
-				+ "				+ \"          -@@   :@#         \");");
+		System.out.println(""
+				+ "				            -@@@=             \r\n"
+				+ "				           .@@@@@#            \r\n"
+				+ "				           *@@@@@@            \r\n"
+				+ "				            #@@@@;            \r\n"
+				+ "				             :#=,             \r\n"
+				+ "				           ,#@@@@!            \r\n"
+				+ "				          !@@@@@@@@,          \r\n"
+				+ "				        =@@@@@@@@@@@@,        \r\n"
+				+ "				        @@@=@@@@@@:@@*        \r\n"
+				+ "				       ;@@,=@@@@@@,=@@.       \r\n"
+				+ "				       ;@@ $@@@@@@,;@@.       \r\n"
+				+ "				        :- $@@@@@@- :-        \r\n"
+				+ "				           #@@!!@@;           \r\n"
+				+ "				           @@# ,@@!           \r\n"
+				+ "				           @@# .@@*           \r\n"
+				+ "				          .@@*  @@$           \r\n"
+				+ "				          ~@@~  $@@           \r\n"
+				+ "				          :@@-  =@@           \r\n"
+				+ "				          ;@@,  =@@.          \r\n"
+				+ "				          -@@   :@#         ");
 		for (int i = 0; i < problem.length; i++) {
 			problem[i] = answerWord.charAt(i);
 			answer[i] = '_';
@@ -299,10 +324,10 @@ public class hangman {
 			for (int i = 0; i < answer.length; i++) {
 				System.out.print(answer[i] + " ");
 			}
-			System.out.println();
-			for (int i = 0; i < answer.length; i++) {
-				System.out.print(problem[i] + " ");
-			}
+//			System.out.println();
+//			for (int i = 0; i < answer.length; i++) {
+//				System.out.print(problem[i] + " ");
+//			}
 			System.out.println();
 			boolean check = false;
 			boolean checkreal = false;
@@ -325,83 +350,90 @@ public class hangman {
 			if (check == false && chance > 0) {
 				chance--;
 				if(chance==4) {
-					
-					System.out.println("                    -@@@=             \\r\\n\"\r\n"
-							+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
-							+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
-							+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
-							+ "				+ \"             :#=,             \\r\\n\"\r\n"
-							+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
-							+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
-							+ "				+ \"           @@@@@@@@@@,        \\r\\n\"\r\n"
-							+ "				+ \"           =@@@@@@:@@*        \\r\\n\"\r\n"
-							+ "				+ \"           =@@@@@@,=@@.       \\r\\n\"\r\n"
-							+ "				+ \"           $@@@@@@,;@@.       \\r\\n\"\r\n"
-							+ "				+ \"           $@@@@@@- :-        \\r\\n\"\r\n"
-							+ "				+ \"           #@@!!@@;           \\r\\n\"\r\n"
-							+ "				+ \"           @@# ,@@!           \\r\\n\"\r\n"
-							+ "				+ \"           @@# .@@*           \\r\\n\"\r\n"
-							+ "				+ \"          .@@*  @@$           \\r\\n\"\r\n"
-							+ "				+ \"          ~@@~  $@@           \\r\\n\"\r\n"
-							+ "				+ \"          :@@-  =@@           \\r\\n\"\r\n"
-							+ "				+ \"          ;@@,  =@@.          \\r\\n\"\r\n"
-							+ "				+ \"          -@@   :@#         \");");
+					m = player.subPlay(5);
+					System.out.println(""
+							+ "				            -@@@=             \r\n"
+							+ "				           .@@@@@#            \r\n"
+							+ "				           *@@@@@@            \r\n"
+							+ "				            #@@@@;            \r\n"
+							+ "				             :#=,             \r\n"
+							+ "				           ,#@@@@!            \r\n"
+							+ "				           @@@@@@@@,          \r\n"
+							+ "				           @@@@@@@@@@,        \r\n"
+							+ "				           =@@@@@@:@@*        \r\n"
+							+ "				           =@@@@@@,=@@.       \r\n"
+							+ "				           $@@@@@@,;@@.       \r\n"
+							+ "				           $@@@@@@- :-        \r\n"
+							+ "				           #@@!!@@;           \r\n"
+							+ "				           @@# ,@@!           \r\n"
+							+ "				           @@# .@@*           \r\n"
+							+ "				          .@@*  @@$           \r\n"
+							+ "				          ~@@~  $@@           \r\n"
+							+ "				          :@@-  =@@           \r\n"
+							+ "				          ;@@,  =@@.          \r\n"
+							+ "				          -@@   :@#         ");
 				}else if(chance==3) {
-					System.out.println("                    -@@@=             \\r\\n\"\r\n"
-							+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
-							+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
-							+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
-							+ "				+ \"             :#=,             \\r\\n\"\r\n"
-							+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
-							+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
-							+ "				+ \"           @@@@@@@@           \\r\\n\"\r\n"
-							+ "				+ \"           =@@@@@@:           \\r\\n\"\r\n"
-							+ "				+ \"           =@@@@@@,           \\r\\n\"\r\n"
-							+ "				+ \"           $@@@@@@,           \\r\\n\"\r\n"
-							+ "				+ \"           $@@@@@@-           \\r\\n\"\r\n"
-							+ "				+ \"           #@@!!@@;           \\r\\n\"\r\n"
-							+ "				+ \"           @@# ,@@!           \\r\\n\"\r\n"
-							+ "				+ \"           @@# .@@*           \\r\\n\"\r\n"
-							+ "				+ \"          .@@*  @@$           \\r\\n\"\r\n"
-							+ "				+ \"          ~@@~  $@@           \\r\\n\"\r\n"
-							+ "				+ \"          :@@-  =@@           \\r\\n\"\r\n"
-							+ "				+ \"          ;@@,  =@@.          \\r\\n\"\r\n"
-							+ "				+ \"          -@@   :@#         \");");
+					m = player.subPlay(5);
+					System.out.println(""
+							+ "				            -@@@=             \r\n"
+							+ "				           .@@@@@#            \r\n"
+							+ "				           *@@@@@@            \r\n"
+							+ "				            #@@@@;            \r\n"
+							+ "				             :#=,             \r\n"
+							+ "				           ,#@@@@!            \r\n"
+							+ "				           @@@@@@@@,          \r\n"
+							+ "				           @@@@@@@@           \r\n"
+							+ "				           =@@@@@@:           \r\n"
+							+ "				           =@@@@@@,           \r\n"
+							+ "				           $@@@@@@,           \r\n"
+							+ "				           $@@@@@@-           \r\n"
+							+ "				           #@@!!@@;           \r\n"
+							+ "				           @@# ,@@!           \r\n"
+							+ "				           @@# .@@*           \r\n"
+							+ "				          .@@*  @@$           \r\n"
+							+ "				          ~@@~  $@@           \r\n"
+							+ "				          :@@-  =@@           \r\n"
+							+ "				          ;@@,  =@@.          \r\n"
+							+ "				          -@@   :@#         ");
 				}else if(chance==2) {
-					System.out.println("                    -@@@=             \\r\\n\"\r\n"
-							+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
-							+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
-							+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
-							+ "				+ \"             :#=,             \\r\\n\"\r\n"
-							+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
-							+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
-							+ "				+ \"           @@@@@@@@           \\r\\n\"\r\n"
-							+ "				+ \"           =@@@@@@:           \\r\\n\"\r\n"
-							+ "				+ \"           =@@@@@@,           \\r\\n\"\r\n"
-							+ "				+ \"           $@@@@@@,           \\r\\n\"\r\n"
-							+ "				+ \"           $@@@@@@-           \\r\\n\"\r\n"
-							+ "				+ \"              !!@@;           \\r\\n\"\r\n"
-							+ "				+ \"               ,@@!           \\r\\n\"\r\n"
-							+ "				+ \"               .@@*           \\r\\n\"\r\n"
-							+ "				+ \"                @@$           \\r\\n\"\r\n"
-							+ "				+ \"                $@@           \\r\\n\"\r\n"
-							+ "				+ \"                =@@           \\r\\n\"\r\n"
-							+ "				+ \"                =@@.          \\r\\n\"\r\n"
-							+ "				+ \"                :@#         \");");
+					m = player.subPlay(5);
+					System.out.println(""
+							+ "				            -@@@=             \r\n"
+							+ "				           .@@@@@#            \r\n"
+							+ "				           *@@@@@@            \r\n"
+							+ "				            #@@@@;            \r\n"
+							+ "				             :#=,             \r\n"
+							+ "				           ,#@@@@!            \r\n"
+							+ "				           @@@@@@@@,          \r\n"
+							+ "				           @@@@@@@@           \r\n"
+							+ "				           =@@@@@@:           \r\n"
+							+ "				           =@@@@@@,           \r\n"
+							+ "				           $@@@@@@,           \r\n"
+							+ "				           $@@@@@@-           \r\n"
+							+ "				              !!@@;           \r\n"
+							+ "				               ,@@!           \r\n"
+							+ "				               .@@*           \r\n"
+							+ "				                @@$           \r\n"
+							+ "				                $@@           \r\n"
+							+ "				                =@@           \r\n"
+							+ "				                =@@.          \r\n"
+							+ "				                :@#         ");
 				}else if(chance==1) {
-					System.out.println("                    -@@@=             \\r\\n\"\r\n"
-							+ "				+ \"           .@@@@@#            \\r\\n\"\r\n"
-							+ "				+ \"           *@@@@@@            \\r\\n\"\r\n"
-							+ "				+ \"            #@@@@;            \\r\\n\"\r\n"
-							+ "				+ \"             :#=,             \\r\\n\"\r\n"
-							+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
-							+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
-							+ "				+ \"           @@@@@@@@           \\r\\n\"\r\n"
-							+ "				+ \"           =@@@@@@:           \\r\\n\"\r\n"
-							+ "				+ \"           =@@@@@@,           \\r\\n\"\r\n"
-							+ "				+ \"           $@@@@@@,           \\r\\n\"\r\n"
-							+ "				+ \"           $@@@@@@-           \\r\\n\"\r\n"
-							+ "				+ \"                            \");");
+					m = player.subPlay(5);
+					System.out.println(""
+							+ "				            -@@@=             \r\n"
+							+ "				           .@@@@@#            \r\n"
+							+ "				           *@@@@@@            \r\n"
+							+ "				            #@@@@;            \r\n"
+							+ "				             :#=,             \r\n"
+							+ "				           ,#@@@@!            \r\n"
+							+ "				           @@@@@@@@,          \r\n"
+							+ "				           @@@@@@@@           \r\n"
+							+ "				           =@@@@@@:           \r\n"
+							+ "				           =@@@@@@,           \r\n"
+							+ "				           $@@@@@@,           \r\n"
+							+ "				           $@@@@@@-           \r\n"
+							+ "\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
 				}
 			}
 			if (checkreal == true) {
@@ -412,15 +444,14 @@ public class hangman {
 				break;
 			}
 			if (chance == 0 && check == false) {
-				System.out.println("                                      \\r\\n\"\r\n"
-						+ "				+ \"           ,#@@@@!            \\r\\n\"\r\n"
-						+ "				+ \"           @@@@@@@@,          \\r\\n\"\r\n"
-						+ "				+ \"           @@@@@@@@           \\r\\n\"\r\n"
-						+ "				+ \"           =@@@@@@:           \\r\\n\"\r\n"
-						+ "				+ \"           =@@@@@@,           \\r\\n\"\r\n"
-						+ "				+ \"           $@@@@@@,           \\r\\n\"\r\n"
-						+ "				+ \"           $@@@@@@-           \\r\\n\"\r\n"
-						+ "				+ \"                            \");");
+				player.stop();
+				m = player.subPlay(6);
+				System.out.println("\r\n"
+						+ "				            -@@@=             \r\n"
+						+ "				           .@@@@@#            \r\n"
+						+ "				           *@@@@@@            \r\n"
+						+ "				            #@@@@;            \r\n"
+						+ "\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
 				System.out.println("부활했습니다.");
 				life--;
 				break;
@@ -428,6 +459,8 @@ public class hangman {
 			}
 
 			if (life == 0) {
+				
+				m = player.play(7);
 				System.out.println("죽었습니다.");
 				System.out.println("점수  : " + score);
 				return score;
@@ -445,6 +478,8 @@ public class hangman {
 		return false;
 	}
 	public void death() {
+		MusicPlayer player = new MusicPlayer();
+		MusicVO m = player.play(8);
 		System.out.println("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\r\n"
 				+ "ZZZZEEZZZZZZZZZZZZZEEZZZZZZZZZZZZZZEZZZZ\r\n" + "ZZZ9EZZZZZDwZZZZZZ9EZZZZZDwEZZZZZE9ZZZZZ\r\n"
 				+ "ZZ9ZZZZZZZZZZZZZZ9ZZZZZZZZZZZZZZEZZZZZZE\r\n" + "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ\r\n"

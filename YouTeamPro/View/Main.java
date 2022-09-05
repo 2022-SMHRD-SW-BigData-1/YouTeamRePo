@@ -28,12 +28,13 @@ public class Main {
 		
 		Story s = new Story();
 		s.title();
-		s.opening();
+		s.opening1();
+		s.opening2
+		();
 		
 		while (true) {
 			System.out.print("[1]회원가입 [2]로그인 [3]전체랭킹확인 [4]회원탈퇴 [5]게임종료>> ");
 			MusicPlayer player = new MusicPlayer();
-			player.stop();
 			MusicVO m = player.play(3);
 			menu = sc.nextInt();
 			if (menu == 1) {
@@ -58,6 +59,7 @@ public class Main {
 				String pw = sc.next();
 				boolean res = dao.login(id, pw);
 				if (res == true) {
+					player.stop();
 					System.out.println("로그인 SUCCESS!");
 					rt = play.getword();
 					int score = rt[0];
