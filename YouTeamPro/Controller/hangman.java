@@ -266,6 +266,7 @@ public class hangman {
 						dao.close();
 						rt[0] = score;
 						rt[1] = (int) totalTime;
+						player.stop();
 						return rt;
 
 					} else if (a.equals(c)) {
